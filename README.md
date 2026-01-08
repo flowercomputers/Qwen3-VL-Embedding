@@ -279,13 +279,7 @@ We provide comprehensive examples in `examples/embedding.ipynb` demonstrating va
 - Image Question Answering (VQAv2)
 - Image Retrieval (MS COCO)
 
-**Video Tasks:**
-- Video Classification (UCF101)
-- Video Question Answering (NExTQA)
-- Video Retrieval (MSR-VTT)
-
-**Visual Document Tasks:**
-- Visual Document Retrieval (Vidore ArxivQA)
+Examples for video and visual document tasks are presented in the appendix of [technical report](assets/qwen3vlembedding_technical_report.pdf)
 
 ### Reranking Model
 
