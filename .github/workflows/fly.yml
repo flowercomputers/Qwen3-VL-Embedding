@@ -10,7 +10,7 @@ env:
 
 jobs:
   push_to_fly:
-    runs-on: ubuntu-latest
+    runs-on: floco-runner
     steps:
       - name: Check out code
         uses: actions/checkout@v3
