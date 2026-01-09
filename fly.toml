@@ -1,15 +1,12 @@
-app = 'weft-multi-modal'
+app = 'qwen3-vl-embedding'
 primary_region = 'ord'
 
 [build]
-  image = 'registry.fly.io/weft-multi-modal:latest'
+  image = 'registry.fly.io/qwen3-vl-embedding:latest'
 
 [env]
   COG_LOG_LEVEL = 'debug'
   PORT = '5000'
-
-[experimental]
-  exec = ["python", "-m", "cog.server.http"]
 
 [http_service]
   internal_port = 5000
