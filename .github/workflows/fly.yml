@@ -43,7 +43,7 @@ jobs:
 
       - name: Push image to fly
         run: |
-          cog push registry.fly.io/prompt-segmenter-test:latest
+          cog push registry.fly.io/qwen3-vl-embedding:latest
 
       - name: Deploy to fly
         run: |
