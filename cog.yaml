@@ -7,7 +7,6 @@ build:
     - "build-essential"
     - "nvidia-cuda-toolkit"
   python_version: "3.11"
-  python_requirements: "./pyproject.toml"
 
 
 predict: "predict.py:Predictor"
