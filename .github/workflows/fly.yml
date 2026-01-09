@@ -31,12 +31,12 @@ jobs:
 
       - name: Setup environment
         run: |
-          bash scripts/setup_environment.sh
+          cog run bash scripts/setup_environment.sh
 
       - name: Download model weights
         run: |
-          uv pip install huggingface-hub
-          huggingface-cli download Qwen/Qwen3-VL-Embedding-8B --local-dir ./models/Qwen3-VL-Embedding-8B
+          cog run uv pip install huggingface-hub
+          cog run huggingface-cli download Qwen/Qwen3-VL-Embedding-8B --local-dir ./models/Qwen3-VL-Embedding-8B
 
       - name: Auth Fly
         run: |
@@ -45,7 +45,7 @@ jobs:
       - name: Push image to fly
         run: |
           cog push registry.fly.io/prompt-segmenter-test:latest
-          
+
       - name: Deploy to fly
         run: |
           flyctl deploy --remote-only
