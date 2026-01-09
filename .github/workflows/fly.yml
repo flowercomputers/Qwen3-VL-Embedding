@@ -1,0 +1,51 @@
+name: Deploy to fly
+
+# This workflow is triggered manually from the GitHub website.
+# To run it, click the "Actions" tab on the repo page.
+on:
+  workflow_dispatch:
+
+env:
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+jobs:
+  push_to_fly:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Verify flyctl installation
+        run: |
+          which flyctl
+          flyctl version
+
+      - name: Install Cog
+        run: |
+          sudo curl -o /usr/local/bin/cog -L https://github.com/replicate/cog/releases/download/v0.8.0-beta3/cog_Linux_x86_64
+          sudo chmod +x /usr/local/bin/cog
+          cog --version
+
+      - name: Setup environment
+        run: |
+          bash scripts/setup_environment.sh
+
+      - name: Download model weights
+        run: |
+          uv pip install huggingface-hub
+          huggingface-cli download Qwen/Qwen3-VL-Embedding-8B --local-dir ./models/Qwen3-VL-Embedding-8B
+
+      - name: Auth Fly
+        run: |
+          flyctl auth docker
+
+      - name: Push image to fly
+        run: |
+          cog push registry.fly.io/prompt-segmenter-test:latest
+          
+      - name: Deploy to fly
+        run: |
+          flyctl deploy --remote-only
