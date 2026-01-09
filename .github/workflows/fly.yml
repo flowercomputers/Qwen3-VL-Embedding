@@ -35,7 +35,7 @@ jobs:
 
       - name: Download model weights
         run: |
-          cog run huggingface-cli download Qwen/Qwen3-VL-Embedding-8B --local-dir ./models/Qwen3-VL-Embedding-8B
+          cog run bash scripts/complete_setup.sh
 
       - name: Auth Fly
         run: |
