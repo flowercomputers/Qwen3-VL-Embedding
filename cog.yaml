@@ -3,6 +3,7 @@
 
 build:
   gpu: true
+  cuda_version: "12.8"
   system_packages:
     - "build-essential"
   python_version: "3.11"
