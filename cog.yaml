@@ -3,9 +3,9 @@
 
 build:
   gpu: true
-  cuda_version: "12.8"
   system_packages:
     - "build-essential"
+    - "nvidia-cuda-toolkit"
   python_version: "3.11"
   python_requirements: "./pyproject.toml"
 
