@@ -86,6 +86,7 @@ setup_environment() {
 install_flash_attn() {
     print_info "Installing flash-attn (this may take several minutes)..."
     
+    print_info "NVCC version: $(nvcc --version)"
     uv pip install flash-attn --no-build-isolation
 }
 
