@@ -11,6 +11,13 @@ download_models() {
     echo "Models downloaded successfully!"
 }
 
+install_flash_attn() {
+    echo "Installing flash-attn (this may take several minutes)..."
+    
+    echo "NVCC version: $(nvcc --version)"
+    pip install flash-attn --no-build-isolation
+}
+
 main() {
     source_environment
     download_models

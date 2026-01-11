@@ -29,14 +29,6 @@ jobs:
           sudo chmod +x /usr/local/bin/cog
           cog --version
 
-      - name: Setup environment
-        run: |
-          cog run bash scripts/setup_environment.sh
-
-      - name: Download model weights
-        run: |
-          cog run bash scripts/complete_setup.sh
-
       - name: Auth Fly
         run: |
           flyctl auth docker
