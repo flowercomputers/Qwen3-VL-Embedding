@@ -8,8 +8,6 @@ build:
     - "nvidia-cuda-toolkit"
   python_version: "3.11"
   python_requirements: cog-requirements.txt
-  run:
-    - run bash scripts/complete_setup.sh
 
 
 predict: "predict.py:Predictor"

@@ -29,6 +29,10 @@ jobs:
           sudo chmod +x /usr/local/bin/cog
           cog --version
 
+      - name: Download model weights and install flash-attn
+        run: |
+          cog run bash scripts/complete_setup.sh
+
       - name: Auth Fly
         run: |
           flyctl auth docker
