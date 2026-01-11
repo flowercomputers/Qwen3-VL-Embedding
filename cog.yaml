@@ -3,7 +3,7 @@
 
 build:
   gpu: true
-  cuda: "12.8"
+  cuda: "12.1"
   system_packages:
     - "build-essential"
     - "nvidia-cuda-toolkit"
