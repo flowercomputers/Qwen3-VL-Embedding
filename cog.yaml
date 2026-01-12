@@ -8,6 +8,8 @@ build:
     - "nvidia-cuda-toolkit"
   python_version: "3.11"
   python_requirements: cog-requirements.txt
+  run:
+    - pip install flash-attn --no-build-isolation
 
 
 predict: "predict.py:Predictor"
