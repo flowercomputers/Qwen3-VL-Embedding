@@ -9,7 +9,7 @@ class Predictor(BasePredictor):
 
         self.model = Qwen3VLEmbedder(
             model_name_or_path="./models/Qwen3-VL-Embedding-2B",
-            torch_dtype=torch.bfloat16, 
+            dtype=torch.bfloat16, 
             attn_implementation="flash_attention_2"
         )
 
@@ -18,7 +18,7 @@ class Predictor(BasePredictor):
     def predict(
             self,
             text: str = Input(
-                description="Image",
+                description="a string to embed",
                 default="A woman playing with her dog on a beach at sunset.",
             )
     ) -> list[float]:
