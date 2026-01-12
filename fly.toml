@@ -25,5 +25,5 @@ primary_region = 'ord'
 
 [[vm]]
   size = 'performance-2x'
-  memory = '48gb'
+  memory = '8gb'
   gpu_kind = 'a100-pcie-40gb'

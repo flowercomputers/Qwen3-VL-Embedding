@@ -9,8 +9,8 @@ class Predictor(BasePredictor):
 
         self.model = Qwen3VLEmbedder(
             model_name_or_path="./models/Qwen3-VL-Embedding-2B",
-            # torch_dtype=torch.bfloat16, 
-            # attn_implementation="flash_attention_2"
+            torch_dtype=torch.bfloat16, 
+            attn_implementation="flash_attention_2"
         )
 
         print("Model loaded successfully!")
@@ -23,7 +23,10 @@ class Predictor(BasePredictor):
             )
     ) -> list[float]:
         """Run a single prediction on the model"""
+        embedStartTime = time.time()
         embeddings = self.model.process([{"text": text}])
+        embedEndTime = time.time()
+        print("Embedding time:", embedEndTime - embedStartTime)
         embedding = embeddings[0]  # take the single embedding from the batch
         print("Embedding length:", len(embedding))
         print("Embedding shape:", embedding.shape)
