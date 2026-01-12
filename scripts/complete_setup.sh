@@ -6,7 +6,7 @@ source_environment() {
 
 download_models() {
     echo "Downloading models..."
-    huggingface-cli download Qwen/Qwen3-VL-Embedding-4B --local-dir ./models/Qwen3-VL-Embedding-4B
+    huggingface-cli download Qwen/Qwen3-VL-Embedding-2B --local-dir ./models/Qwen3-VL-Embedding-2B
     echo "Models downloaded successfully!"
 }
 

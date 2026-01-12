@@ -7,7 +7,7 @@ class Predictor(BasePredictor):
         print("Loading pipelines...")
 
         self.model = Qwen3VLEmbedder(
-            model_name_or_path="./models/Qwen3-VL-Embedding-4B",
+            model_name_or_path="./models/Qwen3-VL-Embedding-2B",
             torch_dtype=torch.bfloat16, 
             attn_implementation="flash_attention_2"
         )
