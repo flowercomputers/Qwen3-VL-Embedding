@@ -8,6 +8,8 @@ class Predictor(BasePredictor):
 
         self.model = Qwen3VLEmbedder(
             model_name_or_path="./models/Qwen3-VL-Embedding-8B",
+            torch_dtype=torch.bfloat16, 
+            attn_implementation="flash_attention_2"
         )
 
         print("Model loaded successfully!")
@@ -21,5 +23,9 @@ class Predictor(BasePredictor):
     ) -> list[float]:
         """Run a single prediction on the model"""
         embeddings = self.model.process([{"text": text}])
-        print(embeddings)
-        return embeddings.tolist()
+        embedding = embeddings[0]  # take the single embedding from the batch
+        print("Embedding length:", len(embedding))
+        print("Embedding shape:", embedding.shape)
+        print("Embedding:", embedding)
+
+        return embedding.tolist()
