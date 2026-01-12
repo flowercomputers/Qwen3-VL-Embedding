@@ -9,8 +9,8 @@ class Predictor(BasePredictor):
 
         self.model = Qwen3VLEmbedder(
             model_name_or_path="./models/Qwen3-VL-Embedding-2B",
-            torch_dtype=torch.bfloat16, 
-            attn_implementation="flash_attention_2"
+            # torch_dtype=torch.bfloat16, 
+            # attn_implementation="flash_attention_2"
         )
 
         print("Model loaded successfully!")
