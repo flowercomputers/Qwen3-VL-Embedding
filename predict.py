@@ -1,5 +1,6 @@
 from cog import BasePredictor, Input, Path, BaseModel
 from src.models.qwen3_vl_embedding import Qwen3VLEmbedder
+import torch
 
 class Predictor(BasePredictor):
     def setup(self):
