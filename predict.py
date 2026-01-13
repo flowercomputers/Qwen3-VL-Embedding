@@ -22,11 +22,11 @@ class Predictor(BasePredictor):
 
     def predict(
             self,
-            inputs: List[str] = Input(
+            inputs: list[str] = Input(
                 description="a list of strings, can be text, image URLs, or video URLs",
                 default=["A woman playing with her dog on a beach at sunset."],
             ),
-            types: List[str] | None = Input(
+            types: list[str] | None = Input(
                 description="a list of types, can be 'text', 'image', or 'video'",
                 default=None,
             )
