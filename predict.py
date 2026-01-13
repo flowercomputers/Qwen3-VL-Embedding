@@ -22,20 +22,29 @@ class Predictor(BasePredictor):
 
     def predict(
             self,
-            inputs: List[Dict] = Input(
-                description="a list of embedding inputs, can be text, image, or video",
-                default=[EmbeddingInput(type="text", content="A woman playing with her dog on a beach at sunset.")],
+            inputs: List[str] = Input(
+                description="a list of strings, can be text, image URLs, or video URLs",
+                default=["A woman playing with her dog on a beach at sunset."],
+            ),
+            types: List[str] | None = Input(
+                description="a list of types, can be 'text', 'image', or 'video'",
+                default=None,
             )
     ) -> list[list[float]]:
         formatted_inputs = []
-        for input in inputs:
-            if input.type == "text":
-                formatted_inputs.append({"text": input.content})
-            elif input.type == "image":
-                formatted_inputs.append({"image": input.content})
-            elif input.type == "video":
-                formatted_inputs.append({"video": input.content})
+        if types is None:
+            types = ["text"] * len(inputs)
+        if len(types) != len(inputs):
+            raise ValueError("The number of types must be the same as the number of inputs")
+        for input, type in zip(inputs, types):
+            if type == "text":
+                formatted_inputs.append({"text": input})
+            elif type == "image":
+                formatted_inputs.append({"image": input})
+            elif type == "video":
+                formatted_inputs.append({"video": input})
             else:
-                raise ValueError(f"Invalid input type: {input.type}")
-
+                raise ValueError(f"Invalid input type: {type}")
+        
+        print(formatted_inputs)
         return self.model.process(formatted_inputs).tolist()
