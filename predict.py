@@ -3,6 +3,10 @@ from src.models.qwen3_vl_embedding import Qwen3VLEmbedder
 import torch
 import time
 
+class EmbeddingInput(BaseModel):
+    type: str # either "text", "image", or "video"
+    content: str # is always a string, can be a string or a URL to an image or video
+
 class Predictor(BasePredictor):
     def setup(self):
         """Load the model into memory to make running multiple predictions efficient"""
@@ -18,19 +22,20 @@ class Predictor(BasePredictor):
 
     def predict(
             self,
-            text: str = Input(
-                description="a string to embed",
-                default="A woman playing with her dog on a beach at sunset.",
+            inputs: List[EmbeddingInput] = Input(
+                description="a list of embedding inputs, can be text, image, or video",
+                default=[EmbeddingInput(type="text", content="A woman playing with her dog on a beach at sunset.")],
             )
-    ) -> list[float]:
-        """Run a single prediction on the model"""
-        embedStartTime = time.time()
-        embeddings = self.model.process([{"text": text}])
-        embedEndTime = time.time()
-        print("Embedding time:", embedEndTime - embedStartTime)
-        embedding = embeddings[0]  # take the single embedding from the batch
-        print("Embedding length:", len(embedding))
-        print("Embedding shape:", embedding.shape)
-        print("Embedding:", embedding)
-
-        return embedding.tolist()
+    ) -> list[list[float]]:
+        formatted_inputs = []
+        for input in inputs:
+            if input.type == "text":
+                formatted_inputs.append({"text": input.content})
+            elif input.type == "image":
+                formatted_inputs.append({"image": input.content})
+            elif input.type == "video":
+                formatted_inputs.append({"video": input.content})
+            else:
+                raise ValueError(f"Invalid input type: {input.type}")
+                
+        return self.model.process(formatted_inputs).tolist()

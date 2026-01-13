@@ -7,7 +7,7 @@ requires-python = ">=3.11"
 dependencies = [
     "accelerate>=1.12.0",
     "datasets>=4.4.2",
-    "decord>=0.6.0",
+    "decord>=0.6.0; platform_system == 'Linux'",
     "ipykernel>=7.1.0",
     "matplotlib>=3.10.8",
     "ninja>=1.13.0",
