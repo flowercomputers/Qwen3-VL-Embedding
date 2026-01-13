@@ -22,7 +22,7 @@ class Predictor(BasePredictor):
 
     def predict(
             self,
-            inputs: List[EmbeddingInput] = Input(
+            inputs: List[Dict] = Input(
                 description="a list of embedding inputs, can be text, image, or video",
                 default=[EmbeddingInput(type="text", content="A woman playing with her dog on a beach at sunset.")],
             )
@@ -37,5 +37,5 @@ class Predictor(BasePredictor):
                 formatted_inputs.append({"video": input.content})
             else:
                 raise ValueError(f"Invalid input type: {input.type}")
-                
+
         return self.model.process(formatted_inputs).tolist()
