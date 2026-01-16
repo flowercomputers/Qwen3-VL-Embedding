@@ -9,7 +9,7 @@ env:
   IMAGE_NAME: 'qwen3-vl-embedding'
   PROJECT_ID: 'eastern-lodge-477215-d7'
   AR_REPO_LOCATION: 'us-east1'
-  AR_URL: 'projects/eastern-lodge-477215-d7/locations/us-east1/repositories/gpu-images'
+  AR_URL: 'us-east1-docker.pkg.dev/eastern-lodge-477215-d7/gpu-images'
   SERVICE_ACCOUNT: 'github-actions-service-account@eastern-lodge-477215-d7.iam.gserviceaccount.com' 
   WORKLOAD_IDENTITY_PROVIDER: 'projects/479764873139/locations/global/workloadIdentityPools/flower-dev-pool/providers/github-actions-provider'
 
@@ -51,10 +51,10 @@ jobs:
         run: |
           cog build
 
-      - name: Download model weights and install flash-attn
+      - name: Download model weights
         run: |
           cog run bash scripts/complete_setup.sh
 
       - name: Push image to AR
         run: |
-          cog push "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:${{ github.sha }}"
+          cog push "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:latest" --debug

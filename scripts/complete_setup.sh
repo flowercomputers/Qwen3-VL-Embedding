@@ -19,7 +19,6 @@ install_flash_attn() {
 
 main() {
     echo "Starting complete setup..."
-    # install_flash_attn
     download_models
     echo "Complete setup completed successfully!"
 }
