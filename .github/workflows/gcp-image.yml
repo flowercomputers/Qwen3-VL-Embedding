@@ -49,7 +49,7 @@ jobs:
 
       - name: Build Cog image
         run: |
-          cog build
+          cog build -t "${{ env.IMAGE_NAME }}:latest"
 
       - name: Download model weights
         run: |
