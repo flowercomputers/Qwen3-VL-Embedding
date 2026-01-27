@@ -1,0 +1,47 @@
+#cloud-config
+
+users:
+- name: cloudservice
+  uid: 2000
+
+write_files:
+- path: /etc/systemd/system/install-gpu.service
+  permissions: 0644
+  owner: root
+  content: |
+    [Unit]
+    Description=Install GPU drivers
+    Wants=gcr-online.target docker.socket
+    After=gcr-online.target docker.socket
+
+    [Service]
+    User=root
+    Type=oneshot
+    ExecStart=cos-extensions install gpu
+      ExecStartPost=/bin/mount --bind /var/lib/nvidia /var/lib/nvidia
+      ExecStartPost=/bin/mount -o remount,exec /var/lib/nvidia
+    StandardOutput=journal+console
+    StandardError=journal+console
+
+- path: /etc/systemd/system/cloudservice.service
+  permissions: 0644
+  owner: root
+  content: |
+    [Unit]
+    Description=Start qwen3-vl-embedding docker container
+    Requires=install-gpu.service
+    After=install-gpu.service
+
+    [Service]
+    Environment="HOME=/home/cloudservice"
+    ExecStartPre=/usr/bin/docker-credential-gcr configure-docker --registries=us-east1-docker.pkg.dev
+    ExecStart=/usr/bin/docker run --rm -p 5001:5000 --volume /var/lib/nvidia/lib64:/usr/local/nvidia/lib64 --volume /var/lib/nvidia/bin:/usr/local/nvidia/bin  --device /dev/nvidia0:/dev/nvidia0 --device /dev/nvidia-uvm:/dev/nvidia-uvm --device /dev/nvidiactl:/dev/nvidiactl --name=qwen3-vl-embedding us-east1-docker.pkg.dev/eastern-lodge-477215-d7/gpu-images/qwen3-vl-embedding:latest
+    ExecStop=/usr/bin/docker stop qwen3-vl-embedding
+    ExecStopPost=/usr/bin/docker rm qwen3-vl-embedding
+    StandardOutput=journal+console
+    StandardError=journal+console
+
+runcmd:
+- systemctl daemon-reload
+- systemctl start install-gpu.service
+- systemctl start cloudservice.service

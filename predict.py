@@ -2,6 +2,7 @@ from cog import BasePredictor, Input, Path, BaseModel
 from src.models.qwen3_vl_embedding import Qwen3VLEmbedder
 import torch
 import time
+import asyncio
 
 class EmbeddingInput(BaseModel):
     type: str # either "text", "image", or "video"
@@ -20,7 +21,7 @@ class Predictor(BasePredictor):
 
         print("Model loaded successfully!")
 
-    def predict(
+    async def predict(
             self,
             inputs: list[str] = Input(
                 description="a list of strings, can be text, image URLs, or video URLs",
@@ -47,4 +48,6 @@ class Predictor(BasePredictor):
                 raise ValueError(f"Invalid input type: {type}")
         
         print(formatted_inputs)
-        return self.model.process(formatted_inputs).tolist()
+        # Run the synchronous model.process in a thread pool
+        embeddings = await asyncio.to_thread(self.model.process, formatted_inputs)
+        return embeddings.tolist()
