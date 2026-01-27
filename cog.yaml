@@ -13,6 +13,6 @@ build:
     - pip install flash-attn --no-build-isolation
 
 concurrency:
-  max: 10
+  max: 3
 
 predict: "predict.py:Predictor"
